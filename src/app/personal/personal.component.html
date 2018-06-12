@@ -1,0 +1,61 @@
+<div class="row pt-5">
+  <div class="col-md-6 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header">
+        <h3 class="mb-0">Personal information</h3>
+      </div>
+      <div class="card-body">
+        <form class="form">
+          <div class="form-group">
+            <label for="">Credit card number</label>
+            <input id="cardNum" [(ngModel)]="userInfo.cardNum" name="cardNum" type="text" class="form-control rounded-0" #cardNum="ngModel" required />
+          </div>
+          <div class="form-group">
+            <label for="">Expiration date</label>
+            <input id="expDate" [(ngModel)]="userInfo.expDate" name="expDate" type="text" class="form-control rounded-0" #expDate="ngModel" required />
+          </div>
+          <div class="form-group">
+            <label for="">CVV</label>
+            <input id="cvv" [(ngModel)]="userInfo.cvv" name="cvv" type="text" class="form-control rounded-0" #cvv="ngModel" required />
+          </div>
+          <div class="form-group">
+            <label for="">Password</label>
+            <input id="password" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+          </div>
+          <div *ngIf="!password.invalid && !cvv.invalid && !expDate.invalid && !cardNum.invalid">
+            <button (click)="updateInfo()" type="button" class="btn btn-primary float-right">Update</button>
+          </div>
+          <div *ngIf="password.invalid || cvv.invalid || expDate.invalid || cardNum.invalid" style="text-align:center;">
+            Please fill all the blanks
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header">
+        <h3 class="mb-0">Update balance</h3>
+      </div>
+      <div class="card-body">
+        <form class="form">
+          <div class="form-group">
+            <label for="">Enter amount</label>
+            <input id="balance" [(ngModel)]="userInfo.balance" name="balance" type="text" class="form-control rounded-0" #balance="ngModel" required />
+          </div>
+          <div class="form-group">
+            <label for="">Password</label>
+            <input id="password" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+          </div>
+          <div *ngIf="!balance.invalid">
+            <button (click)="addMoney()" type="button" class="btn btn-primary float-right">Add money</button>
+          </div>
+          <div *ngIf="balance.invalid" style="text-align:center;">
+            Please fill all the blanks
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
