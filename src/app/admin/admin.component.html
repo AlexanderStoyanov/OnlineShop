@@ -1,0 +1,31 @@
+<div class="row pt-5">
+  <div class="col-md-6 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header">
+        <h3 class="mb-0">Add Item</h3>
+      </div>
+      <div class="card-body">
+        <form class="form">
+          <div class="form-group">
+            <label for="">Item name</label>
+            <input id="itemName" [(ngModel)]="newItemData.itemName" name="itemName" type="text" class="form-control rounded-0" #itemName="ngModel" required />
+          </div>
+          <div class="form-group">
+            <label for="">Item description</label>
+            <input id="itemDescription" [(ngModel)]="newItemData.itemDescription" name="itemDescription" type="text" class="form-control rounded-0" #itemDescription="ngModel" required />
+          </div>
+          <div class="form-group">
+            <label for="">Item price</label>
+            <input id="itemPrice" [(ngModel)]="newItemData.itemPrice" name="itemPrice" type="number" min="0.01" class="form-control rounded-0" #itemPrice="ngModel" required />
+          </div>
+          <div *ngIf="!itemName.invalid && !itemDescription.invalid && !itemPrice.invalid">
+            <button (click)="addNewItem()" type="button" class="btn btn-primary float-right">Add Item</button>
+          </div>
+          <div *ngIf="itemName.invalid || itemDescription.invalid || itemPrice.invalid" style="text-align:center;">
+            Please fill all the blanks
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

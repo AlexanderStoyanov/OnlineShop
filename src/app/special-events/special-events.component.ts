@@ -27,4 +27,15 @@ export class SpecialEventsComponent implements OnInit {
       )
   }
 
+  //buyItem(item) {
+  //  this._eventService.buyItem(item)
+  //    .subscribe(
+  //    res => {
+  //      console.log(res)
+        
+  //    },
+  //    err => console.log(err)
+  //    )
+  //}
+
 }

@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth.guard';
 import { PersonalComponent } from './personal/personal.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'personal',
     component: PersonalComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
   }
 ];
 

@@ -9,7 +9,6 @@ export class AuthService {
   private _loginUrl = "http://localhost:3000/api/login"
   private _updateUrl = "http://localhost:3000/api/update"
   private _addMoneyUrl = "http://localhost:3000/api/addMoney"
-  private _getMoneyUrl = "http://localhost:3000/api/getMoney"
 
   constructor(private http: HttpClient, private _router: Router) { }
 
@@ -17,8 +16,8 @@ export class AuthService {
     return this.http.post<any>(this._addMoneyUrl, user)
   }
 
-  getMoney(user) {
-    return this.http.post<any>(this._getMoneyUrl, user)
+  getBalance() {
+    return localStorage.getItem('balance')
   }
 
   updateUserInfo(user) {

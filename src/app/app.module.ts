@@ -14,6 +14,7 @@ import { AuthGuard } from './auth.guard';
 import { EventService } from './event.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { PersonalComponent } from './personal/personal.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PersonalComponent } from './personal/personal.component';
     LoginComponent,
     EventsComponent,
     SpecialEventsComponent,
-    PersonalComponent
+    PersonalComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

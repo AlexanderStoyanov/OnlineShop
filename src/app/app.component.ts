@@ -9,16 +9,8 @@ import { AuthService } from './auth.service';
 export class AppComponent {
   title = 'app';
 
-  userInfo = {}
+  
   constructor(private _authService: AuthService) { }
 
-  getMoney() {
-    this._authService.getMoney(this.userInfo)
-      .subscribe(
-      res => {
-        console.log(res)
-      },
-      err => console.log(err)
-      )
-  }
+  
 }

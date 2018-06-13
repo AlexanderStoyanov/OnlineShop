@@ -6,10 +6,10 @@
     "\\server\\routes",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\admin",
     "\\src\\app\\events",
     "\\src\\app\\login",
-    "\\src\\app\\personal",
-    "\\src\\app\\register"
+    "\\src\\app\\special-events"
   ],
   "SelectedNode": "\\server\\routes\\api.js",
   "PreviewInSolutionExplorer": false
