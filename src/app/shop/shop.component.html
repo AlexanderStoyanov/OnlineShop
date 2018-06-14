@@ -1,10 +1,17 @@
+<div class="row mt-5" *ngIf="!_authService.loggedIn()">
+  <div class="col-md-12 mb-3">
+    <div class="alert alert-warning text-center" role="alert">
+      <strong>Warning!</strong> Login to start buying!
+    </div>
+  </div>
+</div>
 <div class="row mt-5">
   <div class="col-md-4 mb-3" *ngFor="let item of items">
     <div class="card text-center">
       <div class="card-body">
         <h5 class="card-title">{{item.itemName}}</h5>
         <p class="card-text">{{item.itemDescription}}</p>
-        <button *ngIf="_authService.loggedIn()" (click)="buyItem(event)" type="button" class="btn btn-primary">Buy Item</button>
+        <button *ngIf="_authService.loggedIn()" (click)="buyItem(item)" type="button" class="btn btn-primary">Buy Item</button>
       </div>
       <div class="card-footer text-muted">
         ${{item.itemPrice}}

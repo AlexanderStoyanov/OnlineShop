@@ -5,11 +5,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-special-events',
-  templateUrl: './special-events.component.html',
-  styleUrls: ['./special-events.component.css']
+  selector: 'app-shop',
+  templateUrl: './shop.component.html',
+  styleUrls: ['./shop.component.css']
 })
-export class SpecialEventsComponent implements OnInit {
+export class ShopComponent implements OnInit {
 
   items = []
   constructor(private _eventService: EventService, private _router: Router, private _authService: AuthService) { }
@@ -28,15 +28,14 @@ export class SpecialEventsComponent implements OnInit {
       )
   }
 
-  //buyItem(item) {
-  //  this._eventService.buyItem(item)
-  //    .subscribe(
-  //    res => {
-  //      console.log(res)
-        
-  //    },
-  //    err => console.log(err)
-  //    )
-  //}
+  buyItem(item) {
+    this._eventService.buyItem(item)
+      .subscribe(
+      res => {
+        console.log(res)
+      },
+      err => console.log(err)
+      )
+  }
 
 }

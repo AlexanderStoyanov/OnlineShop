@@ -7,9 +7,9 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\admin",
-    "\\src\\app\\events",
     "\\src\\app\\login",
-    "\\src\\app\\special-events"
+    "\\src\\app\\personal",
+    "\\src\\app\\shop"
   ],
   "SelectedNode": "\\server\\routes\\api.js",
   "PreviewInSolutionExplorer": false

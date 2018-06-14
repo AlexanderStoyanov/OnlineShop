@@ -15,6 +15,7 @@ import { EventService } from './event.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { PersonalComponent } from './personal/personal.component';
 import { AdminComponent } from './admin/admin.component';
+import { ShopComponent } from './shop/shop.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AdminComponent } from './admin/admin.component';
     EventsComponent,
     SpecialEventsComponent,
     PersonalComponent,
-    AdminComponent
+    AdminComponent,
+    ShopComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+<!--Personal info-->
 <div class="row pt-5">
   <div class="col-md-6 mx-auto">
     <div class="card rounded-0">
@@ -20,7 +21,7 @@
           </div>
           <div class="form-group">
             <label for="">Password</label>
-            <input id="password" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+            <input id="infoPassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
           </div>
           <div *ngIf="!password.invalid && !cvv.invalid && !expDate.invalid && !cardNum.invalid">
             <button (click)="updateInfo()" type="button" class="btn btn-primary float-right">Update</button>
@@ -32,6 +33,7 @@
       </div>
     </div>
   </div>
+  <!--Update balance-->
   <div class="col-md-6 mx-auto">
     <div class="card rounded-0">
       <div class="card-header">
@@ -45,7 +47,7 @@
           </div>
           <div class="form-group">
             <label for="">Password</label>
-            <input id="password" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+            <input id="updatePassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
           </div>
           <div *ngIf="!balance.invalid">
             <button (click)="addMoney()" type="button" class="btn btn-primary float-right">Add money</button>
@@ -59,3 +61,17 @@
   </div>
 </div>
 
+<!--History-->
+<div class="row pt-5">
+  <div class="col-md-6 mx-auto">
+    <h3 class="mb-4">History</h3>
+    <div *ngFor="let item of boughtItems">
+      <div *ngFor="let subItem of item['boughtItems']; let i = index">
+        <h5 class="itemName">{{subItem.itemName}} (#{{i+1}})</h5>
+        <p class="itemDescription">{{subItem.itemDescription}}</p>
+        <p class="itemPrice">${{subItem.itemPrice}}</p>
+        <p class="divider">--------------------</p>
+      </div>
+    </div>
+  </div>
+</div>

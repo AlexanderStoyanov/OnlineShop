@@ -9,6 +9,7 @@ export class EventService {
   private _specialEventsUrl = "http://localhost:3000/api/special"
   private _buyItemUrl = "http://localhost:3000/api/buyItem"
   private _addNewItemUrl = "http://localhost:3000/api/add"
+  private _historyUrl = "http://localhost:3000/api/history"
 
   constructor(private http: HttpClient, private _router: Router) { }
 
@@ -26,6 +27,10 @@ export class EventService {
 
   getSpecialEvents() {
     return this.http.get<any>(this._specialEventsUrl)
+  }
+
+  getHistory() {
+    return this.http.get<any>(this._historyUrl)
   }
 
 }

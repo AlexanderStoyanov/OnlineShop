@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router'
+import { HttpErrorResponse } from '@angular/common/http';
+import { EventService } from '../event.service'
 
 @Component({
   selector: 'app-personal',
@@ -10,9 +12,17 @@ import { Router } from '@angular/router'
 export class PersonalComponent implements OnInit {
 
   userInfo = {}
-  constructor(private _auth: AuthService, private _router: Router) { }
+  boughtItems = []
+  item = []
+  constructor(private _eventService: EventService, private _auth: AuthService, private _router: Router) { }
 
   ngOnInit() {
+    this._eventService.getHistory()
+      .subscribe(
+      res => this.boughtItems = res,
+      err => console.log(err)
+    )
+    //this.boughtItems = this.boughtItems.find(boughtItems)
   }
 
   updateInfo() {
@@ -20,9 +30,6 @@ export class PersonalComponent implements OnInit {
       .subscribe(
       res => {
         console.log(res)
-        //localStorage.setItem('firstName', res.name)
-        //localStorage.setItem('token', res.token)
-        //this._router.navigate(['/special'])
       },
       err => console.log(err)
       )

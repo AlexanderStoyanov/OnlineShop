@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('firstName', res.name)
         localStorage.setItem('token', res.token)
         localStorage.setItem('balance', res.balance)
-        this._router.navigate(['/special'])
+        this._router.navigate(['/shop'])
       },
       err => console.log(err)
       )

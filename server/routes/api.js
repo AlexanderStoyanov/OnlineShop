@@ -109,13 +109,15 @@ router.post('/add', (req, res) => {
   })
 })
 
-//router.post('/buyItem', (req, res) => {
-//  let itemData = req.body
-//  let itemName = itemData.name
-//  let itemPrice = itemData.price
+router.post('/buyItem', (req, res) => {
+  let itemData = req.body
+  let id = '5b1f293f9aeb6a1004591aa7'
 
-
-//})
+  User.update({ _id: id }, { $push: { boughtItems: itemData } }, function (error, item) {
+    if (error) { throw error; }
+    else { console.log('Added') };
+  })
+})
 
 router.post('/update', (req, res) => {
           //var temp = JSON.parse(JSON.stringify(user))
@@ -164,28 +166,24 @@ router.get('/events', (req, res) => {
   res.json(events)
 })
 
-router.get('/special', verifyToken, (req, res) => {
-  //for (i = 0; i < Item.length; i++) {
-  Item.find({}).toArray(function (err, result) {
-    if (err) throw err;
-    console.log(result);
-  });
-  //res.json(items)
-  //let events = [
-  //  {
-  //    "_id": "11",
-  //    "name": "Shovel",
-  //    "description": "Digs anything you want!",
-  //    "price": "29.99"
-  //  },
-  //  {
-  //    "_id": "12",
-  //    "name": "Crowbar",
-  //    "description": "Universal instrument",
-  //    "price": "49.99"
-  //  }
-  //]
-  //res.json(events)
+router.get('/special', (req, res) => {
+  const query = Item.find();
+  query.collection(Item.collection);
+  query.exec(
+    function (err, item) {
+      if (err) return handleError(err);
+      res.json(item);
+    });
 })
+
+router.get('/history', (req, res) => {
+  const query = User.find();
+  query.exec(
+    function (err, item) {
+      if (err) return handleError(err);
+      res.json(item);
+    });
+})
+
 
 module.exports = router

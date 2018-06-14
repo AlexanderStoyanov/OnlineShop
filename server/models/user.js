@@ -11,7 +11,13 @@ const userSchema = new Schema({
   cardNum: String,
   expDate: String,
   cvv: String,
-  balance: Number
+  balance: Number,
+  boughtItems: [{
+    _id: String,
+    itemName: String,
+    itemDescription: String,
+    itemPrice: Number
+  }]
 })
 
 module.exports = mongoose.model('user', userSchema, 'users')
