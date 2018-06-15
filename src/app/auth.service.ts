@@ -16,10 +16,6 @@ export class AuthService {
     return this.http.post<any>(this._addMoneyUrl, user)
   }
 
-  getBalance() {
-    return localStorage.getItem('balance')
-  }
-
   updateUserInfo(user) {
     return this.http.post<any>(this._updateUrl, user)
   }
@@ -40,13 +36,9 @@ export class AuthService {
     return localStorage.getItem('token')
   }
 
-  getName() {
-    return localStorage.getItem('firstName')
-  }
-
   logoutUser() {
     localStorage.removeItem('token')
-    this._router.navigate(['/events'])
+    this._router.navigate(['/login'])
   }
 
 }

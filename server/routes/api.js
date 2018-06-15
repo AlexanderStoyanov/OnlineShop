@@ -3,6 +3,7 @@ const router = express.Router()
 const User = require('../models/user')
 const Item = require('../models/item')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose')
 const db = "mongodb://vgcode:pfqxbirf@ds135540.mlab.com:35540/vgcode"
 
@@ -37,19 +38,48 @@ router.get('/', (req, res) => {
 
 router.post('/register', (req, res) => {
   let userData = req.body
-  let user = new User(userData)
+  
+  var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+
+  let user = new User(
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: hashedPassword,
+      isAdmin: req.body.isAdmin,
+      balance: 0,
+      cardNum: 0,
+      expDate: 0,
+      cvv: 0
+    }
+  )
   user.save((error, registredUser) => {
     if (error) {
       console.log(error)
     } else {
       let payload = { subject: registredUser._id }
-      let token = jwt.sign(payload, 'secretKey')
-      let name = user.firstName
-      let balance = user.balance
-      res.status(200).send({ token, name, balance })
+      let token = jwt.sign(payload, 'secretKey', { expiresIn: 86400 })
+      res.status(200).send({ token })
     }
   })
 })
+
+router.get('/me', function (req, res) {
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, 'secretKey', function (err, decoded) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+
+    User.findById(decoded.id, function (err, user) {
+      if (err) return res.status(500).send("There was a problem finding the user.");
+      if (!user) return res.status(404).send("No user found.");
+
+      res.status(200).send(user);
+    });
+  });
+});
 
 router.post('/login', (req, res) => {
   let userData = req.body
@@ -62,111 +92,97 @@ router.post('/login', (req, res) => {
       if (!user) {
         res.status(401).send('Invalid email')
       } else {
-        if (user.password !== userData.password) {
-          res.status(401).send('Invalid password')
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) {
+          return res.status(401).send({ auth: false, token: null });
         } else {
           let payload = { subject: user._id }
           let token = jwt.sign(payload, 'secretKey')
-          let name = user.firstName
-          let balance = user.balance
-          res.status(200).send({ token, name, balance })
+          res.status(200).send({ auth: true, token: token })
         }
       }
     }
   })
 })
 
-router.post('/addMoney', (req, res) => {
-  let userData = req.body
-  User.findOne({ password: userData.password }, (error, user) => {
-    if (error) {
-      console.log(error)
-    } else {
-      if (user.password !== userData.password) {
-        res.status(401).send('Invalid password')
-      } else {
-        var id = user._id
-        var newBalance = +user.balance + +userData.balance
-        User.updateMany({ _id: id }, { $set: { balance: newBalance } }, { upsert: true }, function (err, doc) {
-          if (err) { throw err; }
-          else { console.log("Updated"); }
-        });
-      }
-    }
-  })
-})
-
-router.post('/add', (req, res) => {
+router.post('/add', verifyToken, (req, res) => {
   let newItemData = req.body
+  let id = req.userId
   let item = new Item(newItemData)
   item.save((error, addedItem) => {
     if (error) {
       console.log(error)
     } else {
       res.status(200).send('Item was successfully added')
-      console.log('Item added')
+      console.log('New item added')
     }
   })
 })
 
-router.post('/buyItem', (req, res) => {
+router.post('/buyItem', verifyToken, (req, res) => {
   let itemData = req.body
-  let id = '5b1f293f9aeb6a1004591aa7'
-
-  User.update({ _id: id }, { $push: { boughtItems: itemData } }, function (error, item) {
-    if (error) { throw error; }
-    else { console.log('Added') };
-  })
-})
-
-router.post('/update', (req, res) => {
-          //var temp = JSON.parse(JSON.stringify(user))
-          //var obj = Object.assign({}, temp, userData)
-          //delete obj._id
-          //user = new User(obj)
-  let userData = req.body
-  User.findOne({ password: userData.password }, (error, user) => {
+  let id = req.userId
+  console.log(id)
+  User.findOne({ _id: id }, (error, user) => {
     if (error) {
       console.log(error)
     } else {
-        if (user.password !== userData.password) {
-          res.status(401).send('Invalid password')
-        } else {
-          var id = user._id
-          User.updateMany({ _id: id }, { $set: userData }, { upsert: true }, function (err, doc) {
+      if ((+user.balance - +itemData.itemPrice) >= 0) {
+        var newBalance = +user.balance - +itemData.itemPrice
+        User.update({ _id: id }, { $push: { boughtItems: itemData }, $set: { balance: newBalance } }, function (error, item) {
+          if (error) { throw error; }
+          else { console.log('Item bought') };
+        })
+      } else {
+        console.log('Not enough money!')
+      }
+    }
+  })
+})
+
+router.post('/update', verifyToken, (req, res) => {
+  let userData = req.body
+  let id = req.userId
+  User.findOne({ _id: id }, (error, user) => {
+    if (error) {
+      console.log(error)
+    } else {
+      var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+      if (!passwordIsValid) {
+        return res.status(401).send({ auth: false, token: null });
+      } else {
+        delete req.body.password
+          User.update({ _id: id }, { $set: userData }, { upsert: true }, function (err, doc) {
             if (err) { throw err; }
-            else { console.log("Updated"); }
+            else { console.log("Personal info updated"); }
           });
         }
     }
   })
 })
 
-router.get('/events', (req, res) => {
-  let events = [
-    {
-      "_id": "2",
-      "name": "Auto Expo",
-      "description": "Lorem",
-      "date": "2012-04-23"
-    },
-    {
-      "_id": "2",
-      "name": "Auto Expo",
-      "description": "Lorem",
-      "date": "2012-04-23"
-    },
-    {
-      "_id": "2",
-      "name": "Auto Expo",
-      "description": "Lorem",
-      "date": "2012-04-23"
+router.post('/addMoney', verifyToken, (req, res) => {
+  let userData = req.body
+  let id = req.userId
+  User.findOne({ _id: id }, (error, user) => {
+    if (error) {
+      console.log(error)
+    } else {
+      var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+      if (!passwordIsValid) {
+        return res.status(401).send({ auth: false, token: null });
+      } else {
+        let newBalance = (+user.balance + +userData.balance)
+        User.update({ _id: id }, { $set: { balance: newBalance } }, { upsert: true }, function (err, doc) {
+          if (err) { throw err; }
+          else { console.log("Balance updated"); }
+        });
+      }
     }
-  ]
-  res.json(events)
+  })
 })
 
-router.get('/special', (req, res) => {
+router.get('/shop', (req, res) => {
   const query = Item.find();
   query.collection(Item.collection);
   query.exec(
@@ -176,11 +192,14 @@ router.get('/special', (req, res) => {
     });
 })
 
-router.get('/history', (req, res) => {
-  const query = User.find();
+router.get('/history', verifyToken, (req, res) => {
+  let id = req.userId
+  const query = User.find({ _id: id });
   query.exec(
     function (err, item) {
       if (err) return handleError(err);
+      (item[0].balance) = (Math.trunc(item[0].balance * 100) / 100)
+      //delete item[0].password
       res.json(item);
     });
 })

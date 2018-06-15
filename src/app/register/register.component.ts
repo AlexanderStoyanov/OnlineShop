@@ -20,10 +20,8 @@ export class RegisterComponent implements OnInit {
       .subscribe(
       res => {
         console.log(res)
-        localStorage.setItem('firstName', res.name)
         localStorage.setItem('token', res.token)
-        localStorage.setItem('balance', res.balance)
-        this._router.navigate(['/special'])
+        this._router.navigate(['/shop'])
       },
       err => console.log(err)
       )

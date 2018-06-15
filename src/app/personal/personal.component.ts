@@ -13,7 +13,6 @@ export class PersonalComponent implements OnInit {
 
   userInfo = {}
   boughtItems = []
-  item = []
   constructor(private _eventService: EventService, private _auth: AuthService, private _router: Router) { }
 
   ngOnInit() {
@@ -22,7 +21,6 @@ export class PersonalComponent implements OnInit {
       res => this.boughtItems = res,
       err => console.log(err)
     )
-    //this.boughtItems = this.boughtItems.find(boughtItems)
   }
 
   updateInfo() {
