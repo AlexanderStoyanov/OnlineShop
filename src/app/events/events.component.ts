@@ -12,7 +12,7 @@ export class EventsComponent implements OnInit {
   constructor(private _eventService: EventService) { }
 
   ngOnInit() {
-    this._eventService.getEvents()
+    this._eventService.getShop()
       .subscribe(
       res => this.events = res,
       err => console.log(err)

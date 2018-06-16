@@ -9,8 +9,8 @@
     "\\src\\app\\admin",
     "\\src\\app\\login",
     "\\src\\app\\personal",
-    "\\src\\app\\shop"
+    "\\src\\app\\register"
   ],
-  "SelectedNode": "\\server\\routes\\api.js",
+  "SelectedNode": "\\server\\server.js",
   "PreviewInSolutionExplorer": false
 }

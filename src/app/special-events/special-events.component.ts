@@ -15,7 +15,7 @@ export class SpecialEventsComponent implements OnInit {
   constructor(private _eventService: EventService, private _router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
-    this._eventService.getSpecialEvents()
+    this._eventService.getShop()
       .subscribe(
       res => this.items = res,
       err => {

@@ -24,11 +24,12 @@ function verifyToken(req, res, next) {
   if (token === 'null') {
     return res.status(401).send('Unauthorized request')
   }
-  let payload = jwt.verify(token, 'secretKey')
+  let payload = jwt.verify(token, 'raccoon')
   if (!payload) {
     return res.status(401).send('Unauthorized request')
   }
   req.userId = payload.subject
+  req.isAdmin = payload.isAdmin
   next()
 }
 
@@ -38,7 +39,7 @@ router.get('/', (req, res) => {
 
 router.post('/register', (req, res) => {
   let userData = req.body
-  
+  console.log(req.body)
   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
   let user = new User(
@@ -58,28 +59,28 @@ router.post('/register', (req, res) => {
     if (error) {
       console.log(error)
     } else {
-      let payload = { subject: registredUser._id }
-      let token = jwt.sign(payload, 'secretKey', { expiresIn: 86400 })
+      let payload = { subject: registredUser._id, isAdmin: registredUser.isAdmin }
+      let token = jwt.sign(payload, 'raccoon', { expiresIn: 86400 })
       res.status(200).send({ token })
     }
   })
 })
 
-router.get('/me', function (req, res) {
-  var token = req.headers['x-access-token'];
-  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+//router.get('/me', function (req, res) {
+//  var token = req.headers['x-access-token'];
+//  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
-  jwt.verify(token, 'secretKey', function (err, decoded) {
-    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+//  jwt.verify(token, 'secretKey', function (err, decoded) {
+//    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
-    User.findById(decoded.id, function (err, user) {
-      if (err) return res.status(500).send("There was a problem finding the user.");
-      if (!user) return res.status(404).send("No user found.");
+//    User.findById(decoded.id, function (err, user) {
+//      if (err) return res.status(500).send("There was a problem finding the user.");
+//      if (!user) return res.status(404).send("No user found.");
 
-      res.status(200).send(user);
-    });
-  });
-});
+//      res.status(200).send(user);
+//    });
+//  });
+//});
 
 router.post('/login', (req, res) => {
   let userData = req.body
@@ -96,8 +97,8 @@ router.post('/login', (req, res) => {
         if (!passwordIsValid) {
           return res.status(401).send({ auth: false, token: null });
         } else {
-          let payload = { subject: user._id }
-          let token = jwt.sign(payload, 'secretKey')
+          let payload = { subject: user._id, isAdmin: user.isAdmin }
+          let token = jwt.sign(payload, 'raccoon')
           res.status(200).send({ auth: true, token: token })
         }
       }
@@ -106,23 +107,26 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/add', verifyToken, (req, res) => {
-  let newItemData = req.body
-  let id = req.userId
-  let item = new Item(newItemData)
-  item.save((error, addedItem) => {
-    if (error) {
-      console.log(error)
-    } else {
-      res.status(200).send('Item was successfully added')
-      console.log('New item added')
-    }
-  })
+  if (req.isAdmin) {
+    let newItemData = req.body
+    let item = new Item(newItemData)
+    item.save((error, addedItem) => {
+      if (error) {
+        console.log(error)
+      } else {
+        res.status(200).send('Item was successfully added')
+        console.log('New item added')
+      }
+    })
+  } else {
+    console.log('You are not admin to do that!')
+  }
 })
 
 router.post('/buyItem', verifyToken, (req, res) => {
   let itemData = req.body
   let id = req.userId
-  console.log(id)
+  console.log(req)
   User.findOne({ _id: id }, (error, user) => {
     if (error) {
       console.log(error)

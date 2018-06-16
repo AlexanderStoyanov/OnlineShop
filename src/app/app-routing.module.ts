@@ -33,11 +33,13 @@ const routes: Routes = [
   },
   {
     path: 'personal',
-    component: PersonalComponent
+    component: PersonalComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
