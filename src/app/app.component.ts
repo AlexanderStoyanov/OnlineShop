@@ -8,22 +8,31 @@ import { EventService } from './event.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-
-  user = [];
+  
   isAdmin: boolean = false;
+  firstName: String;
+  balance: number;
   constructor(private _authService: AuthService, private _eventService: EventService) { }
 
   
   ngOnInit() {
-    this._eventService.getHistory()
+    this._eventService.getName()
       .subscribe(
       res => {
-        this.user = res
+        this.firstName = res
         console.log(res)
       },
       err => console.log(err)
     )
+
+    this._eventService.getBalance()
+      .subscribe(
+      res => {
+        this.balance = res
+        console.log(res)
+      },
+      err => console.log(err)
+      )
 
     this._authService.checkAdmin()
       .subscribe(

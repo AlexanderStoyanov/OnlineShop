@@ -99,19 +99,16 @@ router.post('/add', verifyToken, (req, res) => {
         console.log(error)
       } else {
         res.status(200).send('Item was successfully added')
-        console.log('New item added')
       }
     })
   } else {
-    res.status(401).send('You are not admin')
-    console.log('You are not admin to do that!')
+    res.status(401).send('Unauthorized request')
   }
 })
 
 router.post('/buyItem', verifyToken, (req, res) => {
   let itemData = req.body
   let id = req.userId
-  console.log(req)
   User.findOne({ _id: id }, (error, user) => {
     if (error) {
       console.log(error)
@@ -120,10 +117,10 @@ router.post('/buyItem', verifyToken, (req, res) => {
         var newBalance = +user.balance - +itemData.itemPrice
         User.update({ _id: id }, { $push: { boughtItems: itemData }, $set: { balance: newBalance } }, function (error, item) {
           if (error) { throw error; }
-          else { console.log('Item bought') };
+          else { res.status(200).send('Item successfully bought'); };
         })
       } else {
-        console.log('Not enough money!')
+        res.status(406).send('Not enough money');
       }
     }
   })
@@ -143,7 +140,7 @@ router.post('/update', verifyToken, (req, res) => {
         delete req.body.password
           User.update({ _id: id }, { $set: userData }, { upsert: true }, function (err, doc) {
             if (err) { throw err; }
-            else { console.log("Personal info updated"); }
+            else { res.status(200).send('Payment information updated'); }
           });
         }
     }
@@ -161,11 +158,19 @@ router.post('/addMoney', verifyToken, (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({ auth: false, token: null });
       } else {
-        let newBalance = (+user.balance + +userData.balance)
-        User.update({ _id: id }, { $set: { balance: newBalance } }, { upsert: true }, function (err, doc) {
-          if (err) { throw err; }
-          else { console.log("Balance updated"); }
-        });
+        if (user.cardNum == 0 || user.expDate == 0 || user.cvv == 0) {
+          res.status(406).send('Invalid payment info');
+        } else {
+          if (+userData.balance <= 0) {
+            res.status(406).send('Invalid amount');
+          } else {
+            let newBalance = (+user.balance + +userData.balance)
+            User.update({ _id: id }, { $set: { balance: newBalance } }, { upsert: true }, function (err, doc) {
+              if (err) { throw err; }
+              else { res.status(200).send('Balance updated'); }
+            });
+          }
+        }
       }
     }
   })
@@ -183,22 +188,35 @@ router.get('/shop', (req, res) => {
 
 router.get('/getAdmin', verifyToken, (req, res) => {
   let id = req.userId
-  User.findById({ _id: id }, { password: 0, firstName: 0 }, function (err, user) {
-    if (err) return handleError(err);
+  User.findById({ _id: id }, function (err, user) {
+    if (err) { console.log(err) };
     res.json(user.isAdmin);
   });
 })
 
-router.get('/history', verifyToken, (req, res) => {
+router.get('/getName', verifyToken, (req, res) => {
   let id = req.userId
-  const query = User.find({ _id: id });
-  query.exec(
-    function (err, item) {
-      if (err) return handleError(err);
-      (item[0].balance) = (Math.trunc(item[0].balance * 100) / 100)
-      //delete item[0].password
-      res.json(item);
-    });
+  User.findById({ _id: id }, function (err, user) {
+    if (err) { console.log(err) };
+    res.json(user.firstName);
+  });
+})
+
+router.get('/getBalance', verifyToken, (req, res) => {
+  let id = req.userId
+  User.findById({ _id: id }, function (err, user) {
+    if (err) { console.log(err) };
+    user.balance = Math.trunc(user.balance * 100) / 100
+    res.json(user.balance);
+  });
+})
+
+router.get('/getBoughtItems', verifyToken, (req, res) => {
+  let id = req.userId
+  User.findById({ _id: id }, function (err, user) {
+    if (err) { console.log(err) };
+    res.json(user.boughtItems);
+  });
 })
 
 

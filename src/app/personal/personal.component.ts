@@ -16,9 +16,9 @@ export class PersonalComponent implements OnInit {
   constructor(private _eventService: EventService, private _auth: AuthService, private _router: Router) { }
 
   ngOnInit() {
-    this._eventService.getHistory()
+    this._eventService.getBoughtItems()
       .subscribe(
-      res => this.boughtItems = res,
+      res => { this.boughtItems = res, console.log(res) },
       err => console.log(err)
     )
   }

@@ -10,12 +10,12 @@
         <a class="nav-link" routerLink="/shop" routerLinkActive="active">Shop</a>
       </li>
     </ul>
-    <ul class="navbar-nav mr-auto" *ngFor="let entry of user">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" routerLink="/special">Welcome, {{entry.firstName}}</a>
+        <a class="nav-link" *ngIf="_authService.loggedIn()">Welcome, {{firstName}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" routerLink="/special">Balance: ${{entry.balance}}</a>
+        <a class="nav-link" *ngIf="_authService.loggedIn()">Balance: ${{balance}}</a>
       </li>
     </ul>
     <ul class="navbar-nav">
