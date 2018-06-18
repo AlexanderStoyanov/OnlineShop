@@ -10,8 +10,9 @@ import { LoginComponent } from './login/login.component';
 import { EventsComponent } from './events/events.component';
 import { SpecialEventsComponent } from './special-events/special-events.component';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
 import { EventService } from './event.service';
+import { AuthGuard } from './auth.guard';
+import { AdminGuard } from './admin.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { PersonalComponent } from './personal/personal.component';
 import { AdminComponent } from './admin/admin.component';
@@ -35,7 +36,7 @@ import { ShopComponent } from './shop/shop.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [AuthService, EventService, AuthGuard,
+  providers: [AuthService, EventService, AuthGuard, AdminGuard, AppComponent,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

@@ -21,7 +21,7 @@
     <ul class="navbar-nav">
       <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
       <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/register" routerLinkActive="active">Register</a>
-      <a class="nav-link" *ngIf="_authService.loggedIn()" routerLink="/admin" routerLinkActive="active">Admin Panel</a>
+      <a class="nav-link" *ngIf="_authService.loggedIn() && isAdmin" routerLink="/admin" routerLinkActive="active">Admin Dash</a>
       <a class="nav-link" *ngIf="_authService.loggedIn()" routerLink="/personal" routerLinkActive="active">Personal</a>
       <a class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()">Logout</a>
     </ul>

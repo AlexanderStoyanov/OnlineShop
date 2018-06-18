@@ -11,6 +11,6 @@
     "\\src\\app\\personal",
     "\\src\\app\\register"
   ],
-  "SelectedNode": "\\server\\server.js",
+  "SelectedNode": "\\server\\routes\\api.js",
   "PreviewInSolutionExplorer": false
 }

@@ -4,11 +4,14 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
+  isAdmin = false;
+  redirectUrl: string;
 
-  private _registerUrl = "http://localhost:3000/api/register"
-  private _loginUrl = "http://localhost:3000/api/login"
-  private _updateUrl = "http://localhost:3000/api/update"
-  private _addMoneyUrl = "http://localhost:3000/api/addMoney"
+  private _registerUrl = "http://localhost:3000/api/register";
+  private _loginUrl = "http://localhost:3000/api/login";
+  private _updateUrl = "http://localhost:3000/api/update";
+  private _addMoneyUrl = "http://localhost:3000/api/addMoney";
+  private _getAdminUrl = "http://localhost:3000/api/getAdmin";
 
   constructor(private http: HttpClient, private _router: Router) { }
 
@@ -18,6 +21,10 @@ export class AuthService {
 
   updateUserInfo(user) {
     return this.http.post<any>(this._updateUrl, user)
+  }
+
+  checkAdmin() {
+    return this.http.get<boolean>(this._getAdminUrl)
   }
 
   registerUser(user) {

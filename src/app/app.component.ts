@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
-import { EventService } from './event.service'
+import { EventService } from './event.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,8 @@ import { EventService } from './event.service'
 export class AppComponent {
   title = 'app';
 
-  user = []
+  user = [];
+  isAdmin: boolean = false;
   constructor(private _authService: AuthService, private _eventService: EventService) { }
 
   
@@ -19,6 +20,15 @@ export class AppComponent {
       .subscribe(
       res => {
         this.user = res
+        console.log(res)
+      },
+      err => console.log(err)
+    )
+
+    this._authService.checkAdmin()
+      .subscribe(
+      res => {
+        this.isAdmin = res
         console.log(res)
       },
       err => console.log(err)

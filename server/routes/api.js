@@ -66,22 +66,6 @@ router.post('/register', (req, res) => {
   })
 })
 
-//router.get('/me', function (req, res) {
-//  var token = req.headers['x-access-token'];
-//  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
-
-//  jwt.verify(token, 'secretKey', function (err, decoded) {
-//    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-
-//    User.findById(decoded.id, function (err, user) {
-//      if (err) return res.status(500).send("There was a problem finding the user.");
-//      if (!user) return res.status(404).send("No user found.");
-
-//      res.status(200).send(user);
-//    });
-//  });
-//});
-
 router.post('/login', (req, res) => {
   let userData = req.body
 
@@ -98,7 +82,7 @@ router.post('/login', (req, res) => {
           return res.status(401).send({ auth: false, token: null });
         } else {
           let payload = { subject: user._id, isAdmin: user.isAdmin }
-          let token = jwt.sign(payload, 'raccoon')
+          let token = jwt.sign(payload, 'raccoon', { expiresIn: 86400 })
           res.status(200).send({ auth: true, token: token })
         }
       }
@@ -119,6 +103,7 @@ router.post('/add', verifyToken, (req, res) => {
       }
     })
   } else {
+    res.status(401).send('You are not admin')
     console.log('You are not admin to do that!')
   }
 })
@@ -194,6 +179,14 @@ router.get('/shop', (req, res) => {
       if (err) return handleError(err);
       res.json(item);
     });
+})
+
+router.get('/getAdmin', verifyToken, (req, res) => {
+  let id = req.userId
+  User.findById({ _id: id }, { password: 0, firstName: 0 }, function (err, user) {
+    if (err) return handleError(err);
+    res.json(user.isAdmin);
+  });
 })
 
 router.get('/history', verifyToken, (req, res) => {
