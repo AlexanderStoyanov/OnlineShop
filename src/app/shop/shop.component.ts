@@ -35,7 +35,14 @@ export class ShopComponent implements OnInit {
         console.log(res)
       },
       err => console.log(err)
-      )
+    )
+    setTimeout(()=> this._eventService.getBalance()
+      .subscribe(
+      res => {
+        this._eventService.balance.next(res)
+      },
+      err => console.log(err)
+      ), 2000)
   }
 
 }

@@ -1,9 +1,9 @@
 <!--Personal info-->
 <div class="row pt-5">
-  <div class="col-md-6 mx-auto">
+  <div class="col-md-6 mx-auto mb-5">
     <div class="card rounded-0">
       <div class="card-header">
-        <h3 class="mb-0">Personal information</h3>
+        <h3 class="mb-0">Update payment information</h3>
       </div>
       <div class="card-body">
         <form class="form">
@@ -65,9 +65,10 @@
 <div class="row pt-5">
   <div class="col-md-6 mx-auto">
     <h3 class="mb-4">Payment information</h3>
-      <p class="itemName">Card number: {{paymentInfo.cardNum}}</p>
-      <p class="itemDescription">Expiration date: {{paymentInfo.expDate}}</p>
-      <p class="itemPrice">CVV: {{paymentInfo.cvv}}</p>
+      <p class="itemName" *ngIf="paymentInfo.cardNum == 0 && paymentInfo.expDate == 0 && paymentInfo.cvv == 0">Update your payment information!</p>
+      <p class="itemName" *ngIf="paymentInfo.cardNum != 0">Card number: {{paymentInfo.cardNum}}</p>
+      <p class="itemDescription" *ngIf="paymentInfo.expDate != 0">Expiration date: {{paymentInfo.expDate}}</p>
+      <p class="itemPrice" *ngIf="paymentInfo.cvv != 0">CVV: {{paymentInfo.cvv}}</p>
   </div>
   <div class="col-md-6 mx-auto">
     <h3 class="mb-4">History</h3>

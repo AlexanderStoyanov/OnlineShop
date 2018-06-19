@@ -39,7 +39,14 @@ export class PersonalComponent implements OnInit {
         console.log(res)
       },
       err => console.log(err)
-      )
+    )
+    setTimeout(()=> this._eventService.getPaymentInfo()
+      .subscribe(
+      res => {
+        this.paymentInfo = res;
+      },
+      err => console.log(err)
+      ), 2000)
   }
 
   addMoney() {
