@@ -12,26 +12,27 @@ export class AdminGuard implements CanActivate {
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    let url: string = state.url;
-    return this.checkAdmin(url);
+    //let url: string = state.url;
+    //return this.checkAdmin(url);
     //if (!this.checkAdmin()) {
     //  this.router.navigate(['/shop'])
     //  return false
     //} else {
     //  return true
     //}
+    return this.isAdmin;
   }
 
-  checkAdmin(url: string): boolean {
-    if (!!this.authService.checkAdmin()) { return true; }
+  //checkAdmin(url: string): boolean {
+  //  if (!!this.authService.checkAdmin()) { return true; }
 
-    // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
+  //  // Store the attempted URL for redirecting
+  //  this.authService.redirectUrl = url;
 
-    // Navigate to the login page with extras
-    this.router.navigate(['/shop']);
-    return false;
-  }
+  //  // Navigate to the login page with extras
+  //  this.router.navigate(['/shop']);
+  //  return false;
+  //}
 
   //checkAdmin() {
   //  this.authService.isAdmin()

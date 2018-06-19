@@ -11,20 +11,29 @@ import { EventService } from '../event.service'
 })
 export class PersonalComponent implements OnInit {
 
-  userInfo = {}
-  boughtItems = []
-  constructor(private _eventService: EventService, private _auth: AuthService, private _router: Router) { }
+  userInfo = {};
+  boughtItems = [];
+  paymentInfo = [];
+  constructor(private _eventService: EventService, private _authService: AuthService, private _router: Router) { }
 
   ngOnInit() {
     this._eventService.getBoughtItems()
       .subscribe(
-      res => { this.boughtItems = res, console.log(res) },
+      res => { this.boughtItems = res },
+      err => console.log(err)
+    )
+
+    this._eventService.getPaymentInfo()
+      .subscribe(
+      res => {
+        this.paymentInfo = res;
+      },
       err => console.log(err)
     )
   }
 
   updateInfo() {
-    this._auth.updateUserInfo(this.userInfo)
+    this._authService.updateUserInfo(this.userInfo)
       .subscribe(
       res => {
         console.log(res)
@@ -34,13 +43,20 @@ export class PersonalComponent implements OnInit {
   }
 
   addMoney() {
-    this._auth.addMoney(this.userInfo)
+    this._authService.addMoney(this.userInfo)
       .subscribe(
       res => {
         console.log(res)
       },
       err => console.log(err)
-      )
+    )
+    setTimeout(()=> this._eventService.getBalance()
+      .subscribe(
+      res => {
+        this._eventService.balance.next(res)
+      },
+      err => console.log(err)
+    ), 1000)
   }
 
 }

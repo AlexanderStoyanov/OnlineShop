@@ -49,10 +49,10 @@
             <label for="">Password</label>
             <input id="updatePassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
           </div>
-          <div *ngIf="!balance.invalid">
+          <div *ngIf="!balance.invalid && !password.invalid">
             <button (click)="addMoney()" type="button" class="btn btn-primary float-right">Add money</button>
           </div>
-          <div *ngIf="balance.invalid" style="text-align:center;">
+          <div *ngIf="balance.invalid || password.invalid" style="text-align:center;">
             Please fill all the blanks
           </div>
         </form>
@@ -63,6 +63,12 @@
 
 <!--History-->
 <div class="row pt-5">
+  <div class="col-md-6 mx-auto">
+    <h3 class="mb-4">Payment information</h3>
+      <p class="itemName">Card number: {{paymentInfo.cardNum}}</p>
+      <p class="itemDescription">Expiration date: {{paymentInfo.expDate}}</p>
+      <p class="itemPrice">CVV: {{paymentInfo.cvv}}</p>
+  </div>
   <div class="col-md-6 mx-auto">
     <h3 class="mb-4">History</h3>
       <div *ngFor="let item of boughtItems; let i = index">

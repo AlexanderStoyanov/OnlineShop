@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
-  isAdmin = false;
-  redirectUrl: string;
+
+  public isAdmin: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(false);
 
   private _registerUrl = "http://localhost:3000/api/register";
   private _loginUrl = "http://localhost:3000/api/login";

@@ -219,5 +219,13 @@ router.get('/getBoughtItems', verifyToken, (req, res) => {
   });
 })
 
+router.get('/getPaymentInfo', verifyToken, (req, res) => {
+  let id = req.userId
+  User.findById({ _id: id }, function (err, user) {
+    if (err) { console.log(err) };
+    res.json({ cardNum: user.cardNum, expDate: user.expDate, cvv: user.cvv });
+  });
+})
+
 
 module.exports = router

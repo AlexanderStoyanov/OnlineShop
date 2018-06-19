@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-register',
@@ -10,17 +11,38 @@ import { Router } from '@angular/router'
 export class RegisterComponent implements OnInit {
 
   registerUserData = {}
-  constructor(private _auth: AuthService, private _router: Router) { }
+  constructor(private _authService: AuthService, private _router: Router, private _eventService: EventService) { }
 
   ngOnInit() {
   }
 
   registerUser() {
-    this._auth.registerUser(this.registerUserData)
+    this._authService.registerUser(this.registerUserData)
       .subscribe(
       res => {
         console.log(res)
         localStorage.setItem('token', res.token)
+        this._eventService.getName()
+          .subscribe(
+          res => {
+            this._eventService.firstName.next(res)
+          },
+          err => console.log(err)
+          )
+        this._eventService.getBalance()
+          .subscribe(
+          res => {
+            this._eventService.balance.next(res)
+          },
+          err => console.log(err)
+          )
+        this._authService.checkAdmin()
+          .subscribe(
+          res => {
+            this._authService.isAdmin.next(res)
+          },
+          err => console.log(err)
+          )
         this._router.navigate(['/shop'])
       },
       err => console.log(err)
