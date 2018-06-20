@@ -11,6 +11,7 @@ export class EventService {
 
   private _shopUrl = "http://localhost:3000/api/shop"
   private _buyItemUrl = "http://localhost:3000/api/buyItem"
+  private _deleteItemUrl = "http://localhost:3000/api/deleteItem"
   private _addNewItemUrl = "http://localhost:3000/api/add"
   private _boughtItemsUrl = "http://localhost:3000/api/getBoughtItems"
   private _nameUrl = "http://localhost:3000/api/getName"
@@ -25,6 +26,10 @@ export class EventService {
 
   buyItem(item) {
     return this.http.post<any>(this._buyItemUrl, item)
+  }
+
+  deleteItem(item) {
+    return this.http.post<any>(this._deleteItemUrl, item)
   }
 
   getShop() {

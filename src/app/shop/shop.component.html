@@ -11,7 +11,8 @@
       <div class="card-body">
         <h5 class="card-title">{{item.itemName}}</h5>
         <p class="card-text">{{item.itemDescription}}</p>
-        <button *ngIf="_authService.loggedIn()" (click)="buyItem(item)" type="button" class="btn btn-primary">Buy Item</button>
+        <button *ngIf="_authService.loggedIn()" (click)="buyItem(item)" type="button" class="btn btn-primary">Buy</button>
+        <button *ngIf="_authService.loggedIn() && isAdmin" (click)="deleteItem(item)" type="button" class="btn btn-primary btn-danger">Delete</button>
       </div>
       <div class="card-footer text-muted">
         ${{item.itemPrice}}

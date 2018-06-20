@@ -126,6 +126,16 @@ router.post('/buyItem', verifyToken, (req, res) => {
   })
 })
 
+router.post('/deleteItem', verifyToken, (req, res) => {
+  let itemData = req.body
+  console.log(req.body._id)
+  if (req.isAdmin) {
+    Item.findById({ _id: req.body._id }).remove().exec();
+  } else {
+    res.status(401).send('Unauthorized request');
+  }
+})
+
 router.post('/update', verifyToken, (req, res) => {
   let userData = req.body
   let id = req.userId
@@ -223,7 +233,14 @@ router.get('/getPaymentInfo', verifyToken, (req, res) => {
   let id = req.userId
   User.findById({ _id: id }, function (err, user) {
     if (err) { console.log(err) };
-    res.json({ cardNum: user.cardNum, expDate: user.expDate, cvv: user.cvv });
+    res.json({
+      nibble4: user.cardNum % 10000,
+      nibble3: Math.trunc((user.cardNum % 100000000) / 10000),
+      nibble2: Math.trunc((user.cardNum % 1000000000000) / 100000000),
+      nibble1: Math.trunc(user.cardNum / 1000000000000),
+      expDate: user.expDate,
+      cvv: user.cvv
+    });
   });
 })
 

@@ -1,5 +1,22 @@
 <!--Personal info-->
 <div class="row pt-5">
+  <div class="col-12">
+    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+      <h4 class="alert-heading">
+        !!! DO NOT enter real credit card information !!!
+      </h4>
+      <p>
+        This application is just a demo, so MAKE UP all payment information instead.
+        The owner of this application/website does not take any responsibility if you
+        choose to enter real credit card information.
+      </p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row pt-3">
   <div class="col-md-6 mx-auto mb-5">
     <div class="card rounded-0">
       <div class="card-header">
@@ -9,19 +26,19 @@
         <form class="form">
           <div class="form-group">
             <label for="">Credit card number</label>
-            <input id="cardNum" [(ngModel)]="userInfo.cardNum" name="cardNum" type="text" class="form-control rounded-0" #cardNum="ngModel" required />
+            <input id="cardNum" pattern="[0-9]{16}" [(ngModel)]="userInfo.cardNum" name="cardNum" type="text" class="form-control" #cardNum="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">Expiration date</label>
-            <input id="expDate" [(ngModel)]="userInfo.expDate" name="expDate" type="text" class="form-control rounded-0" #expDate="ngModel" required />
+            <input id="expDate" [(ngModel)]="userInfo.expDate" name="expDate" type="month" min="2018-06" class="form-control" #expDate="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">CVV</label>
-            <input id="cvv" [(ngModel)]="userInfo.cvv" name="cvv" type="text" class="form-control rounded-0" #cvv="ngModel" required />
+            <input id="cvv" pattern="[0-9]{3}" [(ngModel)]="userInfo.cvv" name="cvv" type="number" min="100" max="999" class="form-control" #cvv="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">Password</label>
-            <input id="infoPassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+            <input id="infoPassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control" #password="ngModel" required />
           </div>
           <div *ngIf="!password.invalid && !cvv.invalid && !expDate.invalid && !cardNum.invalid">
             <button (click)="updateInfo()" type="button" class="btn btn-primary float-right">Update</button>
@@ -37,17 +54,22 @@
   <div class="col-md-6 mx-auto">
     <div class="card rounded-0">
       <div class="card-header">
-        <h3 class="mb-0">Update balance</h3>
+        <h3 class="mb-0">Add money</h3>
       </div>
       <div class="card-body">
         <form class="form">
           <div class="form-group">
             <label for="">Enter amount</label>
-            <input id="balance" [(ngModel)]="userInfo.balance" name="balance" type="number" min="0.01" class="form-control rounded-0" #balance="ngModel" required />
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+              <input id="balance" [(ngModel)]="userInfo.balance" name="balance" type="number" min="0.01" class="form-control" #balance="ngModel" required />
+            </div>
           </div>
           <div class="form-group">
             <label for="">Password</label>
-            <input id="updatePassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+            <input id="updatePassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control" #password="ngModel" required />
           </div>
           <div *ngIf="!balance.invalid && !password.invalid">
             <button (click)="addMoney()" type="button" class="btn btn-primary float-right">Add money</button>
@@ -61,17 +83,21 @@
   </div>
 </div>
 
-<!--History-->
-<div class="row pt-5">
+<!--Payment info-->
+<div class="row pt-5 pb-5">
   <div class="col-md-6 mx-auto">
     <h3 class="mb-4">Payment information</h3>
-      <p class="itemName" *ngIf="paymentInfo.cardNum == 0 && paymentInfo.expDate == 0 && paymentInfo.cvv == 0">Update your payment information!</p>
-      <p class="itemName" *ngIf="paymentInfo.cardNum != 0">Card number: {{paymentInfo.cardNum}}</p>
+      <p class="itemName" *ngIf="paymentInfo.nibble1 == 0 && paymentInfo.expDate == 0 && paymentInfo.cvv == 0">Update your payment information and add some money so you can start shopping!</p>
+      <p class="itemName" *ngIf="paymentInfo.nibble1 != 0">Card number: {{paymentInfo.nibble1}}   {{paymentInfo.nibble2}}   {{paymentInfo.nibble3}}   {{paymentInfo.nibble4}}</p>
       <p class="itemDescription" *ngIf="paymentInfo.expDate != 0">Expiration date: {{paymentInfo.expDate}}</p>
       <p class="itemPrice" *ngIf="paymentInfo.cvv != 0">CVV: {{paymentInfo.cvv}}</p>
   </div>
   <div class="col-md-6 mx-auto">
+    <!--History-->
     <h3 class="mb-4">History</h3>
+      <div *ngIf="boughtItems.length == 0">
+        You don't have any items bought yet! Maybe it's time to start shopping?
+      </div>
       <div *ngFor="let item of boughtItems; let i = index">
         <h5 class="itemName">{{item.itemName}} (#{{i+1}})</h5>
         <p class="itemDescription">{{item.itemDescription}}</p>
