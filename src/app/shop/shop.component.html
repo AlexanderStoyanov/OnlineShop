@@ -1,11 +1,20 @@
-<div class="row mt-5" *ngIf="!_authService.loggedIn()">
-  <div class="col-md-12 mb-3">
-    <div class="alert alert-warning text-center" role="alert">
+<div class="row mt-5">
+  <div class="col-md-12">
+    <div *ngIf="!_authService.loggedIn()" class="alert alert-warning text-center" role="alert">
       <strong>Warning!</strong> Login to start buying!
     </div>
+    <label *ngIf="itemBought" class="alert alert-success text-center" role="alert" style="width: 100%;">
+      Item has been bought!
+    </label>
+    <label *ngIf="itemDeleted" class="alert alert-success text-center" role="alert" style="width: 100%;">
+      Item has been deleted!
+    </label>
+    <label *ngIf="invalidBalance" class="alert alert-warning text-center" role="alert" style="width: 100%;">
+      Please <a routerLink="/personal">add some money</a> to start shopping!
+    </label>
   </div>
 </div>
-<div class="row mt-5">
+<div class="row mt-2">
   <div class="col-md-4 mb-3" *ngFor="let item of items">
     <div class="card text-center">
       <div class="card-body">

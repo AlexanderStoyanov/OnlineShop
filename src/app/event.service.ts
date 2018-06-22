@@ -9,14 +9,23 @@ export class EventService {
   public firstName: BehaviorSubject<String> = new BehaviorSubject<String>(null);
   public balance: BehaviorSubject<Number> = new BehaviorSubject<Number>(null);
 
-  private _shopUrl = "http://localhost:3000/api/shop"
-  private _buyItemUrl = "http://localhost:3000/api/buyItem"
-  private _deleteItemUrl = "http://localhost:3000/api/deleteItem"
-  private _addNewItemUrl = "http://localhost:3000/api/add"
-  private _boughtItemsUrl = "http://localhost:3000/api/getBoughtItems"
-  private _nameUrl = "http://localhost:3000/api/getName"
-  private _balanceUrl = "http://localhost:3000/api/getBalance"
-  private _paymentInfoUrl = "http://localhost:3000/api/getPaymentInfo"
+  //private _shopUrl = "http://localhost:3000/api/shop"
+  //private _buyItemUrl = "http://localhost:3000/api/buyItem"
+  //private _deleteItemUrl = "http://localhost:3000/api/deleteItem"
+  //private _addNewItemUrl = "http://localhost:3000/api/add"
+  //private _boughtItemsUrl = "http://localhost:3000/api/getBoughtItems"
+  //private _nameUrl = "http://localhost:3000/api/getName"
+  //private _balanceUrl = "http://localhost:3000/api/getBalance"
+  //private _paymentInfoUrl = "http://localhost:3000/api/getPaymentInfo"
+
+  private _shopUrl = "http://vigorouscode.com:3000/api/shop"
+  private _buyItemUrl = "http://vigorouscode.com:3000/api/buyItem"
+  private _deleteItemUrl = "http://vigorouscode.com:3000/api/deleteItem"
+  private _addNewItemUrl = "http://vigorouscode.com:3000/api/add"
+  private _boughtItemsUrl = "http://vigorouscode.com:3000/api/getBoughtItems"
+  private _nameUrl = "http://vigorouscode.com:3000/api/getName"
+  private _balanceUrl = "http://vigorouscode.com:3000/api/getBalance"
+  private _paymentInfoUrl = "http://vigorouscode.com:3000/api/getPaymentInfo"
 
   constructor(private http: HttpClient, private _router: Router) { }
 

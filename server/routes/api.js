@@ -39,31 +39,35 @@ router.get('/', (req, res) => {
 
 router.post('/register', (req, res) => {
   let userData = req.body
-  console.log(req.body)
   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-
-  let user = new User(
-    {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: hashedPassword,
-      isAdmin: req.body.isAdmin,
-      balance: 0,
-      cardNum: 0,
-      expDate: 0,
-      cvv: 0
-    }
-  )
-  user.save((error, registredUser) => {
-    if (error) {
-      console.log(error)
+  User.find({ email: req.body.email }, function (err, user) {
+    if (err) { console.log(err) };
+    if (user.length != 0) {
+      return res.status(406).send('This email was already used')
     } else {
-      let payload = { subject: registredUser._id, isAdmin: registredUser.isAdmin }
-      let token = jwt.sign(payload, 'raccoon', { expiresIn: 86400 })
-      res.status(200).send({ token })
+      let user = new User(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          password: hashedPassword,
+          isAdmin: req.body.isAdmin,
+          balance: 0,
+          cardNum: 0,
+          expDate: 0,
+          cvv: 0
+        })
+      user.save((error, registredUser) => {
+        if (error) {
+          console.log(error)
+        } else {
+          let payload = { subject: registredUser._id, isAdmin: registredUser.isAdmin }
+          let token = jwt.sign(payload, 'raccoon', { expiresIn: 86400 })
+          res.status(200).send({ token })
+        }
+      })
     }
-  })
+  });
 })
 
 router.post('/login', (req, res) => {
@@ -128,7 +132,6 @@ router.post('/buyItem', verifyToken, (req, res) => {
 
 router.post('/deleteItem', verifyToken, (req, res) => {
   let itemData = req.body
-  console.log(req.body._id)
   if (req.isAdmin) {
     Item.findById({ _id: req.body._id }).remove().exec();
   } else {

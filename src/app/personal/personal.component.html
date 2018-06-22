@@ -40,6 +40,18 @@
             <label for="">Password</label>
             <input id="infoPassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control" #password="ngModel" required />
           </div>
+          <div class="form-group">
+            <label *ngIf="invalidPasswordUpdateInfo" class="alert alert-danger text-center" role="alert" style="width: 100%;">
+              Invalid password entered! Please, try again.
+              Maybe you
+            </label>
+          </div>
+          <div class="form-group">
+            <label *ngIf="personalInfoUpdated" class="alert alert-success text-center" role="alert" style="width: 100%;">
+              Payment information has been updated!
+              You're ready to add some money!
+            </label>
+          </div>
           <div *ngIf="!password.invalid && !cvv.invalid && !expDate.invalid && !cardNum.invalid">
             <button (click)="updateInfo()" type="button" class="btn btn-primary float-right">Update</button>
           </div>
@@ -64,12 +76,27 @@
               <div class="input-group-prepend">
                 <div class="input-group-text">$</div>
               </div>
-              <input id="balance" [(ngModel)]="userInfo.balance" name="balance" type="number" min="0.01" class="form-control" #balance="ngModel" required />
+              <input id="balance" pattern="[0-9.]{1,}" [(ngModel)]="userInfo.balance" name="balance" type="number" min="0.01" class="form-control" #balance="ngModel" required />
             </div>
           </div>
           <div class="form-group">
             <label for="">Password</label>
             <input id="updatePassword" [(ngModel)]="userInfo.password" name="password" type="password" class="form-control" #password="ngModel" required />
+          </div>
+          <div class="form-group">
+            <label *ngIf="invalidPasswordUpdateBalance" class="alert alert-danger text-center" role="alert" style="width: 100%;">
+              Invalid password entered! Please, try again.
+            </label>
+          </div>
+          <div class="form-group">
+            <label *ngIf="invalidBalance" class="alert alert-danger text-center" role="alert" style="width: 100%;">
+              No payment information found!
+            </label>
+          </div>
+          <div class="form-group">
+            <label *ngIf="balanceUpdated" class="alert alert-success text-center" role="alert" style="width: 100%;">
+              Balance has been updated!
+            </label>
           </div>
           <div *ngIf="!balance.invalid && !password.invalid">
             <button (click)="addMoney()" type="button" class="btn btn-primary float-right">Add money</button>
@@ -87,7 +114,7 @@
 <div class="row pt-5 pb-5">
   <div class="col-md-6 mx-auto">
     <h3 class="mb-4">Payment information</h3>
-      <p class="itemName" *ngIf="paymentInfo.nibble1 == 0 && paymentInfo.expDate == 0 && paymentInfo.cvv == 0">Update your payment information and add some money so you can start shopping!</p>
+      <p class="itemName" *ngIf="paymentInfo.nibble1 == 0 && paymentInfo.expDate == 0 && paymentInfo.cvv == 0">Payment information requires an update.</p>
       <p class="itemName" *ngIf="paymentInfo.nibble1 != 0">Card number: {{paymentInfo.nibble1}}   {{paymentInfo.nibble2}}   {{paymentInfo.nibble3}}   {{paymentInfo.nibble4}}</p>
       <p class="itemDescription" *ngIf="paymentInfo.expDate != 0">Expiration date: {{paymentInfo.expDate}}</p>
       <p class="itemPrice" *ngIf="paymentInfo.cvv != 0">CVV: {{paymentInfo.cvv}}</p>

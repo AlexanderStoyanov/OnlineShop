@@ -11,6 +11,7 @@ export class AdminComponent implements OnInit {
 
 
   newItemData = {}
+  itemAdded: Boolean = false;
   constructor(private _event: EventService, private _router: Router) { }
 
   ngOnInit() {
@@ -22,8 +23,18 @@ export class AdminComponent implements OnInit {
       res => {
         console.log(res)
       },
-      err => console.log(err)
+      err => {
+        if (err.status == 200) {
+          this.itemAdded = true;
+          setTimeout(() => this.falseItemAdded()
+            , 5000)
+        }
+      }
       )
+  }
+
+  falseItemAdded() {
+    this.itemAdded = false;
   }
 
 }

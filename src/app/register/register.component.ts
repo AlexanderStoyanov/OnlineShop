@@ -10,7 +10,8 @@ import { EventService } from '../event.service';
 })
 export class RegisterComponent implements OnInit {
 
-  registerUserData = {}
+  registerUserData = {};
+  invalidEmail: Boolean = false;
   constructor(private _authService: AuthService, private _router: Router, private _eventService: EventService) { }
 
   ngOnInit() {
@@ -45,8 +46,18 @@ export class RegisterComponent implements OnInit {
           )
         this._router.navigate(['/shop'])
       },
-      err => console.log(err)
+      err => {
+        if (err.status == 406) {
+          this.invalidEmail = true;
+          setTimeout(() => this.falseInvalidEmail()
+            , 5000)
+        }
+      }
       )
+  }
+
+  falseInvalidEmail() {
+    this.invalidEmail = false;
   }
 
 }

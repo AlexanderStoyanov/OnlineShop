@@ -31,6 +31,11 @@
                 <input id="itemPrice" [(ngModel)]="newItemData.itemPrice" name="itemPrice" type="number" min="0.01" class="form-control" #itemPrice="ngModel" required />
               </div>
             </div>
+          <div class="form-group">
+            <label *ngIf="itemAdded" class="alert alert-success text-center" role="alert" style="width: 100%;">
+              Item has been added!
+            </label>
+          </div>
           <div *ngIf="!itemName.invalid && !itemDescription.invalid && !itemPrice.invalid">
             <button (click)="addNewItem()" type="button" class="btn btn-primary float-right">Add Item</button>
           </div>

@@ -32,7 +32,6 @@ export class AppComponent {
       .subscribe(
       res => {
         this.firstName = res
-        console.log(res)
       },
       err => console.log(err)
       )
@@ -41,7 +40,6 @@ export class AppComponent {
       .subscribe(
       res => {
         this.balance = res
-        console.log(res)
       },
       err => console.log(err)
       )
@@ -50,7 +48,6 @@ export class AppComponent {
       .subscribe(
       res => {
         this.isAdmin = res
-        console.log(res)
       },
       err => console.log(err)
       )

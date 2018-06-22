@@ -10,7 +10,8 @@ import { EventService } from '../event.service';
 })
 export class LoginComponent implements OnInit {
   
-  loginUserData = {}
+  loginUserData = {};
+  invalidData: Boolean = false;
   constructor(private _authService: AuthService, private _router: Router, private _eventService: EventService) { }
 
   ngOnInit() {
@@ -20,7 +21,6 @@ export class LoginComponent implements OnInit {
     this._authService.loginUser(this.loginUserData)
       .subscribe(
       res => {
-        console.log(res)
         localStorage.setItem('token', res.token)
         this._eventService.getName()
           .subscribe(
@@ -45,8 +45,18 @@ export class LoginComponent implements OnInit {
         )
         this._router.navigate(['/shop'])
       },
-      err => console.log(err)
+      err => {
+        if (err.status == 401) {
+          this.invalidData = true;
+          setTimeout(() => this.falseInvalidData()
+            , 5000)
+        }
+      }
       )
+  }
+
+  falseInvalidData() {
+    this.invalidData = false;
   }
 
 }

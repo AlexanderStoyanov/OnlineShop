@@ -14,10 +14,15 @@
             <label for="">Password</label>
             <input id="password" [(ngModel)]="loginUserData.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
           </div>
-          <div *ngIf="!password.invalid && !email.invalid">
+          <div class="form-group">
+            <label *ngIf="invalidData" class="alert alert-danger text-center" role="alert" style="width: 100%;">
+              Email or password is invalid. Please try again.
+            </label>
+          </div>
+          <div *ngIf="!password.invalid && !email.invalid" class="form-group">
             <button (click)="loginUser()" type="button" class="btn btn-success float-right">Login</button>
           </div>
-          <div *ngIf="password.invalid || email.invalid" style="text-align:center;">
+          <div *ngIf="password.invalid || email.invalid" class="form-group" style="text-align:center;">
             Please fill all the blanks
           </div>
         </form>

@@ -12,7 +12,10 @@ import { AuthService } from '../auth.service';
 export class ShopComponent implements OnInit {
 
   isAdmin: Boolean = false;
-  items = []
+  items = [];
+  itemBought: Boolean = false;
+  itemDeleted: Boolean = false;
+  invalidBalance: Boolean = false;
   constructor(private _eventService: EventService, private _router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
@@ -31,7 +34,6 @@ export class ShopComponent implements OnInit {
       .subscribe(
       res => {
         this.isAdmin = res
-        console.log(res)
       },
       err => console.log(err)
     )
@@ -43,7 +45,18 @@ export class ShopComponent implements OnInit {
       res => {
         console.log(res)
       },
-      err => console.log(err)
+      err => {
+        if (err.status === 200) {
+          this.itemBought = true;
+          setTimeout(() => this.falseItemBought()
+            , 5000)
+        } else
+        if (err.status === 406) {
+          this.invalidBalance = true;
+          setTimeout(() => this.falseInvalidBalance()
+            , 5000)
+        }
+      }
     )
     setTimeout(()=> this._eventService.getBalance()
       .subscribe(
@@ -60,7 +73,13 @@ export class ShopComponent implements OnInit {
       res => {
         console.log(res)
       },
-      err => console.log(err)
+      err => {
+        if (err.status === 200) {
+          this.itemDeleted = true;
+          setTimeout(() => this.falseItemDeleted()
+            , 5000)
+        }
+      }
     )
     setTimeout(() => this._eventService.getShop()
       .subscribe(
@@ -73,6 +92,18 @@ export class ShopComponent implements OnInit {
         }
       }
     ), 1000)
+  }
+
+  falseItemBought() {
+    this.itemBought = false;
+  }
+
+  falseItemDeleted() {
+    this.itemDeleted = false;
+  }
+
+  falseInvalidBalance() {
+    this.invalidBalance = false;
   }
 
 }
