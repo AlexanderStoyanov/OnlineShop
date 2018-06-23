@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Azoman</a>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/shop">Azoman</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -19,14 +19,14 @@
       </li>
     </ul>
     <ul class="navbar-nav">
-      <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
-      <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/register" routerLinkActive="active">Register</a>
-      <a class="nav-link" *ngIf="_authService.loggedIn() && isAdmin" routerLink="/admin" routerLinkActive="active">Admin Dash</a>
-      <a class="nav-link" *ngIf="_authService.loggedIn()" routerLink="/personal" routerLinkActive="active">Personal</a>
-      <a class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()">Logout</a>
+      <li class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/login" routerLinkActive="active">Login</li>
+      <li class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/register" routerLinkActive="active">Register</li>
+      <li class="nav-link" *ngIf="_authService.loggedIn() && isAdmin" routerLink="/admin" routerLinkActive="active">Admin Dash</li>
+      <li class="nav-link" *ngIf="_authService.loggedIn()" routerLink="/personal" routerLinkActive="active">Personal</li>
+      <li class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()">Logout</li>
     </ul>
   </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
   <router-outlet></router-outlet>
 </div>

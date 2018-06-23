@@ -1,6 +1,6 @@
 <div class="row pt-5">
   <div class="col-md-6 mx-auto">
-    <div class="card rounded-0">
+    <div class="card">
       <div class="card-header">
         <h3 class="mb-0">Login</h3>
       </div>
@@ -8,11 +8,11 @@
         <form class="form">
           <div class="form-group">
             <label for="">Email</label>
-            <input id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="loginUserData.email" name="email" type="text" class="form-control rounded-0" #email="ngModel" required />
+            <input id="email" pattern="[A-Za-z0-9._]+@[A-Za-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="loginUserData.email" name="email" type="text" class="form-control" #email="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">Password</label>
-            <input id="password" [(ngModel)]="loginUserData.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+            <input id="password" [(ngModel)]="loginUserData.password" name="password" type="password" class="form-control" #password="ngModel" required />
           </div>
           <div class="form-group">
             <label *ngIf="invalidData" class="alert alert-danger text-center" role="alert" style="width: 100%;">

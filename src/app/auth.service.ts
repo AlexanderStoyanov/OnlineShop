@@ -8,17 +8,17 @@ export class AuthService {
 
   public isAdmin: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(false);
 
-  //private _registerUrl = "http://localhost:3000/api/register";
-  //private _loginUrl = "http://localhost:3000/api/login";
-  //private _updateUrl = "http://localhost:3000/api/update";
-  //private _addMoneyUrl = "http://localhost:3000/api/addMoney";
-  //private _getAdminUrl = "http://localhost:3000/api/getAdmin";
+  private _registerUrl = "http://localhost:3000/api/register";
+  private _loginUrl = "http://localhost:3000/api/login";
+  private _updateUrl = "http://localhost:3000/api/update";
+  private _addMoneyUrl = "http://localhost:3000/api/addMoney";
+  private _getAdminUrl = "http://localhost:3000/api/getAdmin";
 
-  private _registerUrl = "http://vigorouscode.com:3000/api/register";
-  private _loginUrl = "http://vigorouscode.com:3000/api/login";
-  private _updateUrl = "http://vigorouscode.com:3000/api/update";
-  private _addMoneyUrl = "http://vigorouscode.com:3000/api/addMoney";
-  private _getAdminUrl = "http://vigorouscode.com:3000/api/getAdmin";
+  //private _registerUrl = "http://vigorouscode.com:3000/api/register";
+  //private _loginUrl = "http://vigorouscode.com:3000/api/login";
+  //private _updateUrl = "http://vigorouscode.com:3000/api/update";
+  //private _addMoneyUrl = "http://vigorouscode.com:3000/api/addMoney";
+  //private _getAdminUrl = "http://vigorouscode.com:3000/api/getAdmin";
 
   constructor(private http: HttpClient, private _router: Router) { }
 

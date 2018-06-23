@@ -9,7 +9,7 @@
 </div>
 <div class="row pt-5">
   <div class="col-md-6 mx-auto">
-    <div class="card rounded-0">
+    <div class="card">
       <div class="card-header">
         <h3 class="mb-0">Register</h3>
       </div>
@@ -17,19 +17,19 @@
         <form class="form">
           <div class="form-group">
             <label for="">First name</label>
-            <input id="firstName" placeholder="John" [(ngModel)]="registerUserData.firstName" name="firstName" type="text" class="form-control rounded-0" #firstName="ngModel" required />
+            <input id="firstName" placeholder="John" [(ngModel)]="registerUserData.firstName" name="firstName" type="text" class="form-control" #firstName="ngModel" required />
             </div>
           <div class="form-group">
             <label for="">Last name</label>
-            <input id="lastName" placeholder="Doe" [(ngModel)]="registerUserData.lastName" name="lastName" type="text" class="form-control rounded-0" #lastName="ngModel" required />
+            <input id="lastName" placeholder="Doe" [(ngModel)]="registerUserData.lastName" name="lastName" type="text" class="form-control" #lastName="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">Email</label>
-            <input id="email" placeholder="me@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="registerUserData.email" name="email" type="text" class="form-control rounded-0" #email="ngModel" required />
+            <input id="email" placeholder="me@gmail.com" pattern="[A-Za-z0-9._]+@[A-Za-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="registerUserData.email" name="email" type="text" class="form-control" #email="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">Password</label>
-            <input id="password" [(ngModel)]="registerUserData.password" name="password" type="password" class="form-control rounded-0" #password="ngModel" required />
+            <input id="password" [(ngModel)]="registerUserData.password" name="password" type="password" class="form-control" #password="ngModel" required />
           </div>
           <div class="form-check">
             <input id="isAdmin" title="Check if you want more power!" [(ngModel)]="registerUserData.isAdmin" name="isAdmin" type="checkbox" class="form-check-input" #isAdmin="ngModel">
