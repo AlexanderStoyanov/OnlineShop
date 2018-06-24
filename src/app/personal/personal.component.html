@@ -1,14 +1,14 @@
 
   <div class="row mt-5">
     <!--navigation-->
-    <div class="col-lg-3">
+    <div class="col-lg-2">
       <p>
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#updateBalance" aria-expanded="false" aria-controls="multiCollapseExample2">Update balance</button>
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#updatePaymentInfo" aria-expanded="false" aria-controls="multiCollapseExample2">Update payment info</button>
       </p>
     </div>
     <!--forms-->
-    <div class="col-lg-3">
+    <div class="col-lg-4">
       <div class="collapse multi-collapse" id="updatePaymentInfo">
         <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
           <h4 class="alert-heading">
@@ -117,8 +117,11 @@
     </div>
     <!--info-->
     <div class="col-lg-3">
-      <h3 class="mb-4">Payment information</h3>
-      <p class="itemName" *ngIf="paymentInfo.nibble1 == 0 && paymentInfo.expDate == 0 && paymentInfo.cvv == 0">Payment information requires an update.</p>
+      <h3 class="mb-4">Payment info</h3>
+      <p class="itemName" *ngIf="paymentInfo.nibble1 == 0 && paymentInfo.expDate == 0 && paymentInfo.cvv == 0">
+        Payment information requires an update.
+        It will be used for updating your balance!
+      </p>
       <p class="itemName" *ngIf="paymentInfo.nibble1 != 0">Card number: {{paymentInfo.nibble1}}   {{paymentInfo.nibble2}}   {{paymentInfo.nibble3}}   {{paymentInfo.nibble4}}</p>
       <p class="itemDescription" *ngIf="paymentInfo.expDate != 0">Expiration date: {{paymentInfo.expDate}}</p>
       <p class="itemPrice" *ngIf="paymentInfo.cvv != 0">CVV: {{paymentInfo.cvv}}</p>

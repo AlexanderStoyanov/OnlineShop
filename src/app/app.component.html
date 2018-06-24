@@ -19,14 +19,14 @@
       </li>
     </ul>
     <ul class="navbar-nav">
-      <li class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/login" routerLinkActive="active">Login</li>
-      <li class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/register" routerLinkActive="active">Register</li>
-      <li class="nav-link" *ngIf="_authService.loggedIn() && isAdmin" routerLink="/admin" routerLinkActive="active">Admin Dash</li>
-      <li class="nav-link" *ngIf="_authService.loggedIn()" routerLink="/personal" routerLinkActive="active">Personal</li>
+      <li class="nav-link" style="cursor:pointer" *ngIf="!_authService.loggedIn()" routerLink="/login" routerLinkActive="active">Login</li>
+      <li class="nav-link" style="cursor:pointer" *ngIf="!_authService.loggedIn()" routerLink="/register" routerLinkActive="active">Register</li>
+      <li class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn() && isAdmin" routerLink="/admin" routerLinkActive="active">Admin Dash</li>
+      <li class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" routerLink="/personal" routerLinkActive="active">Personal</li>
       <li class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()">Logout</li>
     </ul>
   </div>
 </nav>
-<div class="container-fluid">
+<div class="container">
   <router-outlet></router-outlet>
 </div>

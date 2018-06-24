@@ -16,11 +16,11 @@
         <form class="form">
           <div class="form-group">
             <label for="">Item name</label>
-            <input id="itemName" pattern="[A-Za-z]{3,}" placeholder="3 characters min" [(ngModel)]="newItemData.itemName" name="itemName" type="text" class="form-control" #itemName="ngModel" required />
+            <input id="itemName" pattern="[A-Za-z-_+/ ]{3,}" placeholder="3 characters min" [(ngModel)]="newItemData.itemName" name="itemName" type="text" class="form-control" #itemName="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">Item description</label>
-            <input id="itemDescription" pattern="[A-Za-z]{6,}" placeholder="6 characters min" [(ngModel)]="newItemData.itemDescription" name="itemDescription" type="text" class="form-control" #itemDescription="ngModel" required />
+            <input id="itemDescription" pattern="[A-Za-z-_+/ ]{6,}" placeholder="6 characters min" [(ngModel)]="newItemData.itemDescription" name="itemDescription" type="text" class="form-control" #itemDescription="ngModel" required />
           </div>
           <div class="form-group">
             <label for="">Item price</label>
